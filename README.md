@@ -1,7 +1,9 @@
 # Vulkan in C, not C++
 
 **NOTES**  
-This is a template that can be used to get started in coding Vulkan with the C language.
+This is a template that can be used to get started in coding Vulkan with the C language with GCC ( MinGW on windows ).  
+  
+Since I am on windows, I used this version of GCC / MinGW : https://nuwen.net/mingw.html  
   
 Keep in mind, update the vulkan version number to the correct one you have installed. ( You might have installed Vulkan in a different path then where I did. )  
   
