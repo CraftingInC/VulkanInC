@@ -1,6 +1,6 @@
 # Vulkan in C, not C++
 
-**NOTES**
+**NOTES**  
 This is a template that can be used to get started in coding Vulkan with the C language.
 
 Keep in mind, update the vulkan version number to the correct one you have installed. ( You might have installed Vulkan in a different path then where I did. )  
