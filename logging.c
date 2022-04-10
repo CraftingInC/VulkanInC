@@ -1,8 +1,9 @@
+/* Unknown license from original author. Once I rewrite it, it will be MIT. */
+
 #include "logging.h"
 
 #include <time.h>    // time()  localtime()  strftime()  tzset()
 #include <unistd.h>  // getpid()
-
 
 void _log(FILE *file, const char *fmt, ...) {
   va_list ap;

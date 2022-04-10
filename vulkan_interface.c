@@ -1,3 +1,5 @@
+/* MIT License at the bottom of this file. */
+
 #include "vulkan_interface.h"
 
 #define GLFW_INCLUDE_VULKAN
@@ -9,8 +11,11 @@
 
 #include "logging.h"
 
-VkInstance m_instance;     // This is temporary. Eventually will be part of a local struct.
+// This local variable is temporary. Eventually it will be part of a local struct.
+VkInstance m_instance;
 
+// This will auto-detect the version of Vulkan that you have.
+// *** IMPORTANT: Make sure your graphics drivers are up to date ! ***
 bool vulkanInit(FILE *fp)
 {
     log(fp, "----- VULKAN INFO -----");
@@ -90,4 +95,28 @@ void vulkanShutdown()
         m_instance = NULL;
     }
 }
+
+/*
+MIT License
+
+Copyright (c) 2022 CraftingInC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 
