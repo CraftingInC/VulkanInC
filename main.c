@@ -1,25 +1,26 @@
 /*
 This code is a skeleton example to make sure cglm and vulkan are working.
 
-Works with c11 and c17
+Works with c99, c11 and c17
 
 My run.bat file has this :
-gcc.exe -Wall -std=c17 -m64 -fomit-frame-pointer -fexpensive-optimizations -Os -IC:\VulkanSDK\1.3.204.1\Include -Ilibs\glfw-master\include -Ilibs\glfw-master\src -Ilibs\cglm-master\include -Ilibs\stb-master -c display.c -o display.o
-gcc.exe -Wall -std=c17 -m64 -fomit-frame-pointer -fexpensive-optimizations -Os -IC:\VulkanSDK\1.3.204.1\Include -Ilibs\glfw-master\include -Ilibs\glfw-master\src -Ilibs\cglm-master\include -Ilibs\stb-master -c main.c -o main.o
-gcc.exe -LC:\VulkanSDK\1.3.204.1\Lib -o VulkanInC.exe main.o display.o -static -m64 -lglfw3 -lvulkan-1 -lgdi32 -s
+gcc.exe -Wall -std=c17 -m64 -O2 -IC:\VulkanSDK\1.3.204.1\Include -Ilibs\glfw-master\include -Ilibs\glfw-master\src -Ilibs\cglm-master\include -c display.c -o display.o
+gcc.exe -Wall -std=c17 -m64 -O2 -IC:\VulkanSDK\1.3.204.1\Include -Ilibs\glfw-master\include -Ilibs\glfw-master\src -Ilibs\cglm-master\include -c vulkan_interface.c -o vulkan_interface.o
+gcc.exe -Wall -std=c17 -m64 -O2 -IC:\VulkanSDK\1.3.204.1\Include -Ilibs\glfw-master\include -Ilibs\glfw-master\src -Ilibs\cglm-master\include -c main.c -o main.o
+gcc.exe -LC:\VulkanSDK\1.3.204.1\Lib -o VulkanInC.exe main.o display.o vulkan_interface.o -static -m64 -s -lglfw3 -lvulkan-1 -lgdi32
+
+I could have used a makefile, but I'm lazy.
 
 NOTICE ---> 1.3.204.1 is the vulkan version number I use.
             Your version might be different.
             Update your version number as needed.
 
 -mwindows -- to get rid of the console under windows when compiling release mode.
-
-NOTE : STATIC is IMPORTANT to get rid of cookie issues !!!
-
-This vulkan demo is too simple for me to bother using / creating a makefile.
 */
 
 #include "display.h"
+#include "vulkan_interface.h"
+
 #include <cglm/cglm.h>
 #include <stdio.h>
 
@@ -27,34 +28,23 @@ int main()
 {
 	if(createWindow())
 	{
-		uint32_t extensionCount = 0;
-		vkEnumerateInstanceExtensionProperties(NULL, &extensionCount, NULL);
-
-		printf("%d extensions supported\n", extensionCount);
-
-		uint32_t pApiVersion = VK_API_VERSION_1_0;
-		VkResult result = vkEnumerateInstanceVersion(&pApiVersion);
-        if(result != VK_SUCCESS)
+        if(vulkanInit() == false)
         {
-           pApiVersion = VK_API_VERSION_1_0;
+            terminateWindow();
         }
 
-        uint32_t major   = VK_API_VERSION_MAJOR(pApiVersion);
-        uint32_t minor   = VK_API_VERSION_MINOR(pApiVersion);
-        uint32_t patch   = VK_API_VERSION_PATCH(pApiVersion);
+        printf("\n----- CGLM MATH TEST -----\n");
+        vec3 v1 = {0.4f, 0.2f, 0.0f};
+        glm_vec3_rotate(v1, glm_rad(45), (vec3){0.7f, 0.6f, 0.3f});
 
-        printf("VULKAN VERSION : %d.%d.%d\n", major, minor, patch);
+        printf("%f, %f, %f\n", v1[0], v1[1], v1[2]);
 
-		vec3 v1 = {0.4f, 0.2f, 0.0f};
-		glm_vec3_rotate(v1, glm_rad(45), (vec3){0.7f, 0.6f, 0.3f});
+        while(!isWindowClosed())
+        {
+            glfwPollEvents();
+        }
 
-		printf("%f, %f, %f\n", v1[0], v1[1], v1[2]);
-
-		while(!isWindowClosed())
-		{
-			glfwPollEvents();
-		}
-
+        vulkanShutdown();
         terminateWindow();
 	}
     return 0;
