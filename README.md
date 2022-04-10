@@ -1,5 +1,8 @@
-# Vulkan in C, not C++
-
+# Vulkan in C, not C++  
+  
+**I WELCOME VOLUNTEERS**  
+  
+  
 **NOTES**  
 Do to scrupulous individuals, I was forced to write the license into the bottom of each file.  
 
