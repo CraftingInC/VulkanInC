@@ -26,7 +26,7 @@ NOTICE ---> 1.3.204.1 is the vulkan version number I use.
 
 int main()
 {
-	if(createWindow())
+	if(createWindow(800, 600, "Vulkan Window in C"))
 	{
         if(vulkanInit() == false)
         {
@@ -41,7 +41,7 @@ int main()
 
         while(!isWindowClosed())
         {
-            glfwPollEvents();
+            pollEvents();
         }
 
         vulkanShutdown();
