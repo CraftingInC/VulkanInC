@@ -7,16 +7,18 @@
 #include <stdlib.h>  // malloc()  free()
 #include <string.h>  // memcpy()
 
+#include "logging.h"
 
 VkInstance m_instance;     // This is temporary. Eventually will be part of a local struct.
 
-bool vulkanInit()
+bool vulkanInit(FILE *fp)
 {
-    printf("----- VULKAN INFO -----\n");
+    log(fp, "----- VULKAN INFO -----");
+
     uint32_t extensionCount = 0;
     vkEnumerateInstanceExtensionProperties(NULL, &extensionCount, NULL);
 
-    printf("%d extensions supported\n", extensionCount);
+    log(fp, "%d extensions supported", extensionCount);
 
     uint32_t pApiVersion = VK_API_VERSION_1_0;
     VkResult result = vkEnumerateInstanceVersion(&pApiVersion);
@@ -29,7 +31,7 @@ bool vulkanInit()
     uint32_t minor   = VK_API_VERSION_MINOR(pApiVersion);
     uint32_t patch   = VK_API_VERSION_PATCH(pApiVersion);
 
-    printf("VULKAN VERSION : %d.%d.%d\n", major, minor, patch);
+    log(fp, "VULKAN VERSION : %d.%d.%d", major, minor, patch);
 
     VkApplicationInfo appInfo = {};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -42,15 +44,19 @@ bool vulkanInit()
     const char **requiredInstanceExtensions = glfwGetRequiredInstanceExtensions(&requiredInstanceExtensionCount);
     uint32_t extension_count = requiredInstanceExtensionCount;
 
-    printf("Total GLFW3 required extension count : %d\n", extension_count);
+    log(fp, "Total GLFW3 required extension count : %d", extension_count);
 
     const char** extensions = malloc(sizeof(char*) * extension_count);
     memcpy(extensions, requiredInstanceExtensions, sizeof(char*) * requiredInstanceExtensionCount);
 
+    log(fp, " ");
+
     for(uint32_t t = 0; t < extension_count; t++)
     {
-        printf("%d.) GLFW3 Extension Name : %s\n", t + 1, extensions[t]);
+        log(fp, "%d.) GLFW3 Extension Name : %s", t + 1, extensions[t]);
     }
+
+    log(fp, " ");
 
     VkInstanceCreateInfo instance_create_info = {};
     instance_create_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
@@ -63,13 +69,13 @@ bool vulkanInit()
     VkResult err = vkCreateInstance(&instance_create_info, NULL, &m_instance);
     if(err != VK_SUCCESS)
     {
-        printf("Unable to create a vkCreateInstance.\n");
+        log(fp, "Unable to create a vkCreateInstance.");
         return false;
     } else {
         uint32_t physicalDeviceCount = 0;
         vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, NULL);
-        printf("Total Devices : %d\n", physicalDeviceCount);
-        printf("Application Name : %s\n", instance_create_info.pApplicationInfo->pApplicationName);
+        log(fp, "Total Devices : %d", physicalDeviceCount);
+        log(fp, "Application Name : %s", instance_create_info.pApplicationInfo->pApplicationName);
     }
 
     free(extensions);
