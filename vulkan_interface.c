@@ -11,19 +11,22 @@
 
 #include "logging.h"
 
-// This local variable is temporary. Eventually it will be part of a local struct.
+/* This local variable is temporary. Eventually it will be part of a local struct. */
 VkInstance m_instance;
 
-// This will auto-detect the version of Vulkan that you have.
-// *** IMPORTANT: Make sure your graphics drivers are up to date ! ***
-bool vulkanInit(FILE *fp)
+/*
+ This will auto-detect the version of Vulkan that you have.
+ *** IMPORTANT: Make sure your graphics drivers are up to date ! ***
+*/
+
+bool vulkanInit()
 {
-    log(fp, "----- VULKAN INFO -----");
+    log("----- VULKAN INFO -----");
 
     uint32_t extensionCount = 0;
     vkEnumerateInstanceExtensionProperties(NULL, &extensionCount, NULL);
 
-    log(fp, "%d extensions supported", extensionCount);
+    log("%d extensions supported", extensionCount);
 
     uint32_t pApiVersion = VK_API_VERSION_1_0;
     VkResult result = vkEnumerateInstanceVersion(&pApiVersion);
@@ -36,32 +39,32 @@ bool vulkanInit(FILE *fp)
     uint32_t minor   = VK_API_VERSION_MINOR(pApiVersion);
     uint32_t patch   = VK_API_VERSION_PATCH(pApiVersion);
 
-    log(fp, "VULKAN VERSION : %d.%d.%d", major, minor, patch);
+    log("VULKAN VERSION : %d.%d.%d", major, minor, patch);
 
     VkApplicationInfo appInfo = {};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     appInfo.pNext = NULL;
     appInfo.pApplicationName = "VulkanInC";
-    appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+    appInfo.applicationVersion = major;
     appInfo.apiVersion = pApiVersion;
 
     uint32_t requiredInstanceExtensionCount;
     const char **requiredInstanceExtensions = glfwGetRequiredInstanceExtensions(&requiredInstanceExtensionCount);
     uint32_t extension_count = requiredInstanceExtensionCount;
 
-    log(fp, "Total GLFW3 required extension count : %d", extension_count);
+    log("Total GLFW3 required extension count : %d", extension_count);
 
     const char** extensions = malloc(sizeof(char*) * extension_count);
     memcpy(extensions, requiredInstanceExtensions, sizeof(char*) * requiredInstanceExtensionCount);
 
-    log(fp, " ");
+    printSpace();
 
     for(uint32_t t = 0; t < extension_count; t++)
     {
-        log(fp, "%d.) GLFW3 Extension Name : %s", t + 1, extensions[t]);
+        log("%d.) GLFW3 Extension Name : %s", t + 1, extensions[t]);
     }
 
-    log(fp, " ");
+    printSpace();
 
     VkInstanceCreateInfo instance_create_info = {};
     instance_create_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
@@ -74,13 +77,13 @@ bool vulkanInit(FILE *fp)
     VkResult err = vkCreateInstance(&instance_create_info, NULL, &m_instance);
     if(err != VK_SUCCESS)
     {
-        log(fp, "Unable to create a vkCreateInstance.");
+        log("Unable to create a vkCreateInstance.");
         return false;
     } else {
         uint32_t physicalDeviceCount = 0;
         vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, NULL);
-        log(fp, "Total Devices : %d", physicalDeviceCount);
-        log(fp, "Application Name : %s", instance_create_info.pApplicationInfo->pApplicationName);
+        log("Total Devices : %d", physicalDeviceCount);
+        log("Application Name : %s", instance_create_info.pApplicationInfo->pApplicationName);
     }
 
     free(extensions);

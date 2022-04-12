@@ -11,7 +11,7 @@
 bool vulkanInit();
 void vulkanShutdown();
 
-#endif // VULKAN_INTERFACE_H
+#endif /* VULKAN_INTERFACE_H */
 
 /*
 MIT License

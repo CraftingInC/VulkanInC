@@ -10,7 +10,7 @@ bool isWindowClosed(void);
 void pollEvents(void);
 void terminateWindow(void);
 
-#endif // DISPLAY_H
+#endif /* DISPLAY_H */
 
 /*
 MIT License

@@ -1,16 +1,37 @@
-/* Unknown license from original author. Once I rewrite it, it will be MIT. */
+/* MIT License at the bottom of this file. */
 
 #ifndef LOGGING_H
 #define LOGGING_H
 
-// Code borrowed from this article : https://tuttlem.github.io/2012/12/08/simple-logging-in-c.html
-// I have plans to rewrite this. I just needed something simple to get started.
+void initLog(void);
+void _log(const char *fmt, ...);
+void printSpace(void);
+void endLog(void);
 
-#include <stdio.h>   // FILE
-#include <stdarg.h>  // va_start    va_end
+#define log(...) _log(__VA_ARGS__)
 
-void _log(FILE *file, const char *fmt, ...);
+#endif /* LOGGING_H  */
 
-#define log(f, ...) _log(f   , __VA_ARGS__)
+/*
+MIT License
 
-#endif // LOGGING_H
+Copyright (c) 2022 CraftingInC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/

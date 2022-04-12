@@ -16,8 +16,8 @@ Get the VulkanSDK from here : https://vulkan.lunarg.com/
   
 I included the CGLM math library as well as the GLFW3 version that I used for this test template project.  
 
-Added a very simple logger as well. I am planning to write a better version.  
+I added a very simple logger as well. This names the filename of the log to the date it is written.  
   
-The run.bat file is for windows users who want to simply click and go, as long as the same VulkanSDK version is installed, and is in the same path. I didn't use make, because I saw no point for this simple test.  
+The run.bat file is for windows users who want to simply click and go, as long as the same VulkanSDK version is installed, and is in the same path.  
   
-Slowly I am adding more to this template project over time. Example, I am thinking of adding Assimp.  
+Slowly I am adding more to this template project over time. Example: I am planning to add Assimp.  

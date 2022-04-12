@@ -20,8 +20,6 @@ I could have used a makefile, but I'm lazy.
 NOTICE ---> 1.3.204.1 is the vulkan version number I use.
             Your version might be different.
             Update your version number as needed.
-
-
 */
 
 #include "display.h"
@@ -36,23 +34,24 @@ int main()
 {
 	if(createWindow(800, 600, "Vulkan Window in C"))
 	{
-        FILE *fp;
-        fp = fopen("log.txt", "w+");
-        if(vulkanInit(fp) == false)
+	    initLog();
+        if(vulkanInit() == false)
         {
-            fclose(fp);
+            endLog();
             terminateWindow();
+            return -1;
         }
 
-        log(fp, " ");
-        log(fp, "----- CGLM MATH TEST -----");
+        printSpace();
+        log("----- CGLM MATH TEST -----");
         vec3 v1 = {0.4f, 0.2f, 0.0f};
         glm_vec3_rotate(v1, glm_rad(45), (vec3){0.7f, 0.6f, 0.3f});
 
-        log(fp, "%f, %f, %f\n", v1[0], v1[1], v1[2]);
-        log(fp, "----- END TEST -----");
+        log("%f, %f, %f\n", v1[0], v1[1], v1[2]);
+        log("----- END TEST -----");
 
-        fclose(fp);
+        endLog();
+
         while(!isWindowClosed())
         {
             pollEvents();

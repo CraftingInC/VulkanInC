@@ -5,7 +5,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-// This local Variable is temporary. It will be part of a local struct.
+/* This local Variable is temporary. It will be part of a local struct. */
 GLFWwindow* window = NULL;
 
 bool createWindow(int w, int h, const char* windowTitle)
